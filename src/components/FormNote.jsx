@@ -8,6 +8,7 @@ class FormNote extends React.Component {
     this.state = {
       title: '',
       body: '',
+      maxTitleLength: 50,
     };
 
     this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
@@ -16,11 +17,14 @@ class FormNote extends React.Component {
   }
 
   onTitleChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        title: event.target.value,
-      };
-    });
+    const newTitle = event.target.value;
+
+    // Check if the length of the new title is within the specified limit
+    if (newTitle.length <= this.state.maxTitleLength) {
+      this.setState({
+        title: newTitle,
+      });
+    }
   }
 
   onBodyChangeEventHandler(event) {
@@ -34,15 +38,24 @@ class FormNote extends React.Component {
   onSubmitEventHandler(event) {
     event.preventDefault();
     this.props.addNote(this.state);
+    // Reset the form after submission
+    this.setState({
+      title: '',
+      body: '',
+    });
   }
 
   render() {
+    const remainingCharacters =
+      this.state.maxTitleLength - this.state.title.length;
     return (
       <form className="note-input" onSubmit={this.onSubmitEventHandler}>
+        <p>Sisa Karakter {remainingCharacters}</p>
         <input
           type="text"
           value={this.state.title}
           onChange={this.onTitleChangeEventHandler}
+          maxLength={this.state.maxTitleLength}
           placeholder="Beri nama judul"
         />
         <textarea
