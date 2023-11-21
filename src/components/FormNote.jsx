@@ -50,20 +50,20 @@ class FormNote extends React.Component {
       this.state.maxTitleLength - this.state.title.length;
     return (
       <form className="note-input" onSubmit={this.onSubmitEventHandler}>
-        <p>Sisa Karakter {remainingCharacters}</p>
+        <p>Max length : {remainingCharacters}</p>
         <input
           type="text"
           value={this.state.title}
           onChange={this.onTitleChangeEventHandler}
           maxLength={this.state.maxTitleLength}
-          placeholder="Beri nama judul"
+          placeholder="Title"
         />
         <textarea
           value={this.state.body}
           onChange={this.onBodyChangeEventHandler}
           cols="30"
           rows="10"
-          placeholder="Tuliskan kegiatanmu hari ini"
+          placeholder="Activities"
         ></textarea>
         <button type="submit">Add</button>
       </form>
